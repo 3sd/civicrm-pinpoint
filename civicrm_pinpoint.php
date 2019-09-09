@@ -26,7 +26,18 @@ function civicrm_pinpoint_civicrm_xmlMenu(&$files) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_install
  */
-function civicrm_pinpoint_civicrm_install() {
+function civicrm_pinpoint_civicrm_install()
+{
+  $groupID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionGroup', 'sms_provider_name', 'id', 'name');
+  $params  = [
+    'option_group_id' => $groupID,
+    'label' => 'AWS Pinpoint',
+    'value' => 'aws.pinpoint',
+    'name'  => 'awspinpoint',
+    'is_default' => 1,
+    'is_active'  => 1,
+  ];
+  civicrm_api3('option_value', 'create', $params);
   _civicrm_pinpoint_civix_civicrm_install();
 }
 
@@ -44,7 +55,18 @@ function civicrm_pinpoint_civicrm_postInstall() {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_uninstall
  */
-function civicrm_pinpoint_civicrm_uninstall() {
+function civicrm_pinpoint_civicrm_uninstall()
+{
+  $optionID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionValue', 'dummysms', 'id', 'name');
+  if ($optionID)
+    CRM_Core_BAO_OptionValue::del($optionID);
+  $filter    =  array('name'  => 'io.3sd.dummysms');
+  $Providers =  CRM_SMS_BAO_Provider::getProviders(False, $filter, False);
+  if ($Providers) {
+    foreach ($Providers as $key => $value) {
+      CRM_SMS_BAO_Provider::del($value['id']);
+    }
+  }
   _civicrm_pinpoint_civix_civicrm_uninstall();
 }
 
