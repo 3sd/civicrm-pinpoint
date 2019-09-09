@@ -1,6 +1,7 @@
 <?php
 
 require_once 'civicrm_pinpoint.civix.php';
+
 use CRM_CivicrmPinpoint_ExtensionUtil as E;
 
 /**
@@ -8,7 +9,8 @@ use CRM_CivicrmPinpoint_ExtensionUtil as E;
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_config/ 
  */
-function civicrm_pinpoint_civicrm_config(&$config) {
+function civicrm_pinpoint_civicrm_config(&$config)
+{
   _civicrm_pinpoint_civix_civicrm_config($config);
 }
 
@@ -17,7 +19,8 @@ function civicrm_pinpoint_civicrm_config(&$config) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_xmlMenu
  */
-function civicrm_pinpoint_civicrm_xmlMenu(&$files) {
+function civicrm_pinpoint_civicrm_xmlMenu(&$files)
+{
   _civicrm_pinpoint_civix_civicrm_xmlMenu($files);
 }
 
@@ -46,7 +49,8 @@ function civicrm_pinpoint_civicrm_install()
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_postInstall
  */
-function civicrm_pinpoint_civicrm_postInstall() {
+function civicrm_pinpoint_civicrm_postInstall()
+{
   _civicrm_pinpoint_civix_civicrm_postInstall();
 }
 
@@ -75,7 +79,8 @@ function civicrm_pinpoint_civicrm_uninstall()
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_enable
  */
-function civicrm_pinpoint_civicrm_enable() {
+function civicrm_pinpoint_civicrm_enable()
+{
   _civicrm_pinpoint_civix_civicrm_enable();
 }
 
@@ -84,7 +89,8 @@ function civicrm_pinpoint_civicrm_enable() {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_disable
  */
-function civicrm_pinpoint_civicrm_disable() {
+function civicrm_pinpoint_civicrm_disable()
+{
   _civicrm_pinpoint_civix_civicrm_disable();
 }
 
@@ -93,7 +99,8 @@ function civicrm_pinpoint_civicrm_disable() {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_upgrade
  */
-function civicrm_pinpoint_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
+function civicrm_pinpoint_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL)
+{
   return _civicrm_pinpoint_civix_civicrm_upgrade($op, $queue);
 }
 
@@ -105,7 +112,8 @@ function civicrm_pinpoint_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_managed
  */
-function civicrm_pinpoint_civicrm_managed(&$entities) {
+function civicrm_pinpoint_civicrm_managed(&$entities)
+{
   _civicrm_pinpoint_civix_civicrm_managed($entities);
 }
 
@@ -118,7 +126,8 @@ function civicrm_pinpoint_civicrm_managed(&$entities) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_caseTypes
  */
-function civicrm_pinpoint_civicrm_caseTypes(&$caseTypes) {
+function civicrm_pinpoint_civicrm_caseTypes(&$caseTypes)
+{
   _civicrm_pinpoint_civix_civicrm_caseTypes($caseTypes);
 }
 
@@ -132,7 +141,8 @@ function civicrm_pinpoint_civicrm_caseTypes(&$caseTypes) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_angularModules
  */
-function civicrm_pinpoint_civicrm_angularModules(&$angularModules) {
+function civicrm_pinpoint_civicrm_angularModules(&$angularModules)
+{
   _civicrm_pinpoint_civix_civicrm_angularModules($angularModules);
 }
 
@@ -141,7 +151,8 @@ function civicrm_pinpoint_civicrm_angularModules(&$angularModules) {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_alterSettingsFolders
  */
-function civicrm_pinpoint_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
+function civicrm_pinpoint_civicrm_alterSettingsFolders(&$metaDataFolders = NULL)
+{
   _civicrm_pinpoint_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
@@ -152,34 +163,7 @@ function civicrm_pinpoint_civicrm_alterSettingsFolders(&$metaDataFolders = NULL)
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_entityTypes
  */
-function civicrm_pinpoint_civicrm_entityTypes(&$entityTypes) {
+function civicrm_pinpoint_civicrm_entityTypes(&$entityTypes)
+{
   _civicrm_pinpoint_civix_civicrm_entityTypes($entityTypes);
 }
-
-// --- Functions below this ship commented out. Uncomment as required. ---
-
-/**
- * Implements hook_civicrm_preProcess().
- *
- * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_preProcess
- *
-function civicrm_pinpoint_civicrm_preProcess($formName, &$form) {
-
-} // */
-
-/**
- * Implements hook_civicrm_navigationMenu().
- *
- * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_navigationMenu
- *
-function civicrm_pinpoint_civicrm_navigationMenu(&$menu) {
-  _civicrm_pinpoint_civix_insert_navigation_menu($menu, 'Mailings', array(
-    'label' => E::ts('New subliminal message'),
-    'name' => 'mailing_subliminal_message',
-    'url' => 'civicrm/mailing/subliminal',
-    'permission' => 'access CiviMail',
-    'operator' => 'OR',
-    'separator' => 0,
-  ));
-  _civicrm_pinpoint_civix_navigationMenu($menu);
-} // */
