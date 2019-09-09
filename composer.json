@@ -1,0 +1,12 @@
+{
+    "name": "michael/civicrm-pinpoint",
+    "require": {
+        "aws/aws-sdk-php": "^3.110"
+    },
+    "authors": [
+        {
+            "name": "Michael McAndrew",
+            "email": "michael@3sd.io"
+        }
+    ]
+}
