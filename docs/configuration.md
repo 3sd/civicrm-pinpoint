@@ -43,7 +43,7 @@ Then create a _User_ and add them to the group you just created.
 
 Then create an access key for the user and make a note of the key and the secret.
 
-## CiviCRM configuration
+### CiviCRM configuration
 
 Download and install this extension.
 
@@ -64,7 +64,7 @@ Some of the other fields in the SMS provider screen are mandatory, but they are 
 
 At this point you should be ready to send an SMS. Try finding a contact with a mobile number and clicking **Actions > Outbound SMS** and sending an SMS.
 
-### Receiving SMS
+## Receiving SMS
 
 Once you have set up AWS to send SMS, you can optionally configure it to receive SMS. Setting up AWS to receive SMS involves a few more steps that you might expect, but the process is fairly logical.
 
@@ -79,6 +79,6 @@ Then, in the SNS configuration page (which is separate from Amazon Pinpoint) fin
   - Drupal: http://www.example.com/civicrm/sms/callback?provider=aws.pinpoint
   - WordPress: https://www.example.org/?page=CiviCRM&q=civicrm%2Fsms%2Fcallback&provider=aws.pinpoint
 
-## CiviCRM configuration
+Once you have created your subscription, it will need to be confirmed. Provided that the extension is enabled in CiviCRM, and a provider is configured, this should happen automatically.
 
-Now that you have everything configured in AWS, it is time to configure CiviCRM.
+At this point you should be ready to receive an SMS. Try replying to the text that you sent. An inbound SMS activity should be created in CiviCRM.
