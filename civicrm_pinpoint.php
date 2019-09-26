@@ -1,8 +1,7 @@
 <?php
 
 require_once 'civicrm_pinpoint.civix.php';
-
-use CRM_CivicrmPinpoint_ExtensionUtil as E;
+require_once  __DIR__ . '/vendor/autoload.php';
 
 /**
  * Implements hook_civicrm_config().
