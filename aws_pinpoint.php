@@ -7,6 +7,13 @@
 class aws_pinpoint extends CRM_SMS_Provider
 {
 
+  protected $config = array();
+
+  /**
+   * A processed params array
+   *
+   * @var array
+   */
     protected $params = array();
 
 
@@ -14,7 +21,13 @@ class aws_pinpoint extends CRM_SMS_Provider
 
     function __construct($provider)
     {
-        $this->params = civicrm_api3('SmsProvider', 'getsingle', ['id' => $provider['provider_id']]);
+    $this->config = civicrm_api3('SmsProvider', 'getsingle', ['id' => $provider['provider_id']]);
+    $params = explode("\n", $this->config['api_params']);
+    foreach ($params as $line) {
+      $parts = explode('=', trim($line));
+      $key = array_shift($parts);
+      $this->params[$key] = implode('=', $parts);
+    }
     }
 
     static function singleton($provider, $force)
