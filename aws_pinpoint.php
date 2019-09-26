@@ -14,13 +14,13 @@ class aws_pinpoint extends CRM_SMS_Provider
    *
    * @var array
    */
-    protected $params = array();
+  protected $params = array();
 
 
-    static private $_singleton;
+  static private $_singleton;
 
-    function __construct($provider)
-    {
+  function __construct($provider)
+  {
     $this->config = civicrm_api3('SmsProvider', 'getsingle', ['id' => $provider['provider_id']]);
     $params = explode("\n", $this->config['api_params']);
     foreach ($params as $line) {
@@ -28,25 +28,49 @@ class aws_pinpoint extends CRM_SMS_Provider
       $key = array_shift($parts);
       $this->params[$key] = implode('=', $parts);
     }
-    }
+  }
 
-    static function singleton($provider, $force)
-    {
-        if (!isset(self::$_singleton)) {
-            self::$_singleton = new aws_pinpoint($provider);
-        }
-        return self::$_singleton;
+  static function &singleton($providerParams = [], $force = false)
+  {
+    if (!isset(self::$_singleton)) {
+      self::$_singleton = new aws_pinpoint($providerParams);
     }
+    return self::$_singleton;
+  }
 
-    function send($recipients, $header, $message, $jobID = NULL, $userID = NULL)
-    {
-        
-        return // (the ID from AWS pinpoint);
-        return PEAR::raiseError('message', 'code', PEAR_ERROR_RETURN);
-    }
+  function send($recipients, $header, $message, $jobID = NULL, $userID = NULL)
+  {
 
-    function inbound($from_number, $content, $id = NULL)
-    {
-        return parent::processInbound($from_number, $content, NULL, $id);
-    }
+    $client = new Aws\Pinpoint\PinpointClient([
+      'version' => 'latest',
+      'region'  => $this->params['region'],
+      'credentials' => [
+        'key'    => $this->params['key'],
+        'secret' => $this->params['secret'],
+      ]
+    ]);
+
+    $result = $client->sendMessages([
+      'ApplicationId' => $this->params['application_id'],
+      'MessageRequest' => [
+        'Addresses' => [
+          $recipients => [
+            'ChannelType' => 'SMS',
+          ],
+        ],
+        'MessageConfiguration' => [
+          'SMSMessage' => [
+            'Body' => $message,
+          ],
+        ],
+      ],
+    ]);
+
+    return $result->get('MessageResponse')['RequestId'];
+  }
+
+  function inbound($from_number, $content, $id = NULL)
+  {
+    return parent::processInbound($from_number, $content, NULL, $id);
+  }
 }
