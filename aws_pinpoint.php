@@ -45,8 +45,8 @@ class aws_pinpoint extends CRM_SMS_Provider
       'version' => 'latest',
       'region'  => $this->params['region'],
       'credentials' => [
-        'key'    => $this->params['key'],
-        'secret' => $this->params['secret'],
+        'key'    => $this->config['username'],
+        'secret' => $this->config['password'],
       ]
     ]);
 
@@ -69,8 +69,22 @@ class aws_pinpoint extends CRM_SMS_Provider
     return $result->get('MessageResponse')['RequestId'];
   }
 
-  function inbound($from_number, $content, $id = NULL)
+  function inbound()
+
   {
-    return parent::processInbound($from_number, $content, NULL, $id);
+    $input = json_decode(file_get_contents('php://input'));
+    if ($input->Type == 'SubscriptionConfirmation') {
+      file_get_contents($input->SubscribeURL);
+      return;
+    }
+    if ($input->Type == 'Notification') {
+      $message = json_decode($input->Message);
+      return parent::processInbound(
+        $message->originationNumber,
+        $message->messageBody,
+        null,
+        $message->inboundMessageId
+      );
+    }
   }
 }
